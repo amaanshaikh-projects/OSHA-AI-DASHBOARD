@@ -27,6 +27,16 @@ This project was built to demonstrate full-stack capabilities, particularly focu
 ---
 *Created as a portfolio piece to showcase full-stack development, UI/UX design, and API integration skills.*
 
+
+
+
+## 📞 Contact & Inquiries
+
+If you are interested in this project, have any questions, or would like to discuss potential collaborations, feel free to reach out to me:
+
+- Email: "amaanshaikh.contact@gmail.com"
+
+
 ## Copyright
 © 2026 Amaan Zubair Shaikh. All Rights Reserved.
 
