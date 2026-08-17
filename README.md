@@ -1,8 +1,8 @@
-# Vision AI - Smart Camera Analytics Dashboard
+# OSHA AI - Smart Camera Analytics Dashboard
 
-![Vision AI Banner](frontend/logo.jpg)
+![OSHA AI Banner](frontend/logo.jpg)
 
-**Vision AI** is a real-time, AI-powered camera analytics dashboard designed to monitor video streams and generate intelligent alerts based on dynamic visual triggers. Built for modern workspaces and security systems, it allows users to monitor live feeds, configure custom detection rules, and review historical events through an interactive and highly responsive interface.
+**OSHA AI** is a real-time, AI-powered camera analytics dashboard designed to monitor video streams and generate intelligent alerts based on dynamic visual triggers. Built for modern workspaces and security systems, it allows users to monitor live feeds, configure custom detection rules, and review historical events through an interactive and highly responsive interface.
 
 ## 🚀 Key Features
 
