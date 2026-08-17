@@ -1,0 +1,16 @@
+{
+  "openRouter": {
+    "apiKey": "YOUR_OPENROUTER_API_KEY_HERE",
+    "model": "google/gemini-2.5-flash",
+    "timeoutMs": 10000,
+    "maxRetries": 3,
+    "maxConcurrent": 2,
+    "confidenceThreshold": 60,
+    "globalEnable": true
+  },
+  "modelRouting": {
+    "enableComplexityRouting": true,
+    "primaryModel": "google/gemini-2.5-flash-lite",
+    "escalationModel": "google/gemini-2.5-flash"
+  }
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSHA AI - System Alert</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: var(--bg-dark);
+            font-family: var(--font-sans);
+            color: var(--text-primary);
+            text-align: center;
+        }
+        .warning-container {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .warning-icon {
+            width: 64px;
+            height: 64px;
+            color: var(--text-red);
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin-bottom: 16px;
+            font-size: 1.5rem;
+        }
+        p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="warning-container">
+        <i data-lucide="alert-octagon" class="warning-icon"></i>
+        <h1>Camera Automatically Paused</h1>
+        <p>
+            The system detected an abnormally high volume of API requests (over 20 requests per second) originating from one of your connected cameras. 
+        </p>
+        <p>
+            To protect your account from excessive billing and ensure overall system stability, this camera feed has been <strong>automatically paused</strong>.
+        </p>
+        <p style="font-size: 0.9rem;">
+            You can review your camera settings and manually resume the feed from your dashboard when ready.
+        </p>
+        <button class="btn btn-primary" onclick="window.close()">Acknowledge & Close Tab</button>
+    </div>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

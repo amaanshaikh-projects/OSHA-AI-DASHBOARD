@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OSHA AI - Enterprise-grade AI security SaaS. Transform your existing security cameras into intelligent assistants following natural language instructions.">
+    <title>OSHA AI — AI Security That Understands What Matters</title>
+    <!-- Google Fonts: Geist & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+</head>
+<body>
+    <!-- Background Canvas for Interactive Particles & Ambient AI Network -->
+    <canvas id="ambient-particles" class="bg-canvas"></canvas>
+
+    <!-- Navigation Header -->
+    <header class="navbar-header" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo" aria-label="OSHA AI Homepage">
+                <div class="logo-icon-wrapper">
+                    <img src="logo.jpg" alt="Logo" class="logo-svg" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover;">
+                </div>
+                <span class="logo-text">OSHA <span class="logo-accent">AI</span></span>
+            </a>
+            
+            <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#solutions" class="nav-link">Solutions</a>
+                
+                <a href="#security" class="nav-link">Security</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+            </nav>
+
+            <div class="nav-actions">
+                <!-- Shown when NOT signed in -->
+                <div id="nav-auth-buttons">
+                    <a href="dashboard.html#google-login" class="btn btn-ghost nav-login-btn">Login</a>
+                    <a href="dashboard.html#google-login" class="btn btn-primary nav-trial-btn">Start Free Trial</a>
+                </div>
+                <!-- Shown when already signed in -->
+                <div id="nav-user-chip" style="display:none;">
+                    <a href="dashboard.html" class="nav-user-profile-chip" id="nav-user-chip-link">
+                        <div class="nav-user-avatar" id="nav-user-avatar"></div>
+                        <span class="nav-user-name" id="nav-user-name">Loading...</span>
+                        <i data-lucide="layout-dashboard" style="width:14px;height:14px;opacity:0.7;"></i>
+                    </a>
+                </div>
+                <button class="mobile-nav-toggle" aria-expanded="false" aria-label="Toggle navigation menu" id="mobile-toggle">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-drawer" id="mobile-drawer">
+        <nav class="mobile-nav-menu">
+            <a href="#features" class="mobile-link">Features</a>
+            <a href="#solutions" class="mobile-link">Solutions</a>
+            <a href="#pricing" class="mobile-link">Pricing</a>
+            <a href="#security" class="mobile-link">Security</a>
+            <a href="#faq" class="mobile-link">FAQ</a>
+            <hr class="drawer-divider">
+            <div class="drawer-actions" id="drawer-auth-buttons">
+                <a href="dashboard.html#google-login" class="btn btn-ghost w-full">Login</a>
+                <a href="dashboard.html#google-login" class="btn btn-primary w-full">Start Free Trial</a>
+            </div>
+            <div class="drawer-actions" id="drawer-user-chip" style="display:none;">
+                <a href="dashboard.html" class="btn btn-primary w-full">Go to Dashboard</a>
+            </div>
+        </nav>
+    </div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section" id="hero">
+            <div class="section-container hero-grid">
+                <div class="hero-content reveal-item">
+                    <div class="tag-badge">
+                        <span class="badge-dot"></span>
+                        <span class="badge-text">2026 Enterprise Security Edition</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Your Cameras Can Finally <span class="gradient-text">Understand</span> What They See.
+                    </h1>
+                    <p class="hero-description">
+                        Designed to protect your privacy. OSHA AI analyzes events without permanently storing continuous footage. Non-event frames are automatically discarded, and only verified alert snapshots are temporarily retained before automatic deletion.
+                    </p>
+                    <div class="hero-ctas">
+                        <a href="dashboard.html#google-login" id="hero-cta-btn" class="btn btn-primary btn-lg btn-glow">Start Free Trial <i data-lucide="arrow-right" class="btn-icon"></i></a>
+                        <a href="#demo" class="btn btn-secondary btn-lg"><i data-lucide="play" class="btn-icon fill-icon"></i> Watch Demo</a>
+                    </div>
+                    <div class="hero-trust-badges">
+                        <div class="trust-badge">
+                            <i data-lucide="cpu" class="trust-icon text-blue"></i>
+                            <span>AI Powered</span>
+                        </div>
+                        <div class="trust-badge">
+                            <i data-lucide="shield-check" class="trust-icon text-emerald"></i>
+                            <span>Encrypted</span>
+                        </div>
+                        <div class="trust-badge">
+                            <i data-lucide="eye-off" class="trust-icon text-blue"></i>
+                            <span>Privacy First</span>
+                        </div>
+                        <div class="trust-badge">
+                            <i data-lucide="video" class="trust-icon text-emerald"></i>
+                            <span>Works with Existing Cameras</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual reveal-item">
+                    <!-- Live Camera Feed Dashboard Mockup -->
+                    <div class="dashboard-preview-card glass-panel">
+                        <div class="dashboard-header">
+                            <div class="window-controls">
+                                <span class="win-btn close"></span>
+                                <span class="win-btn minimize"></span>
+                                <span class="win-btn maximize"></span>
+                            </div>
+                            <div class="dashboard-title-wrapper">
+                                <span class="dashboard-live-indicator">
+                                    <span class="pulse-dot"></span> LIVE OVERVIEW
+                                </span>
+                            </div>
+                            <div class="dashboard-stats">
+                                <span>5 Active Feeds</span>
+                            </div>
+                        </div>
+
+                        <!-- Dashboard Grid Layout -->
+                        <div class="dashboard-internal-grid">
+                            <!-- Feeds Column -->
+                            <div class="feeds-column">
+                                <div class="cam-feed-item active" data-cam-id="front-door">
+                                    <div class="cam-feed-preview">
+                                        <div class="cam-badge">Front Door</div>
+                                        <div class="cam-status"><span class="pulse-dot green"></span> ONLINE</div>
+                                        <!-- Animated scan overlay -->
+                                        <div class="scan-laser"></div>
+                                        <div class="mock-feed-image feed-front-door"></div>
+                                    </div>
+                                    <div class="cam-prompt-info">
+                                        <div class="prompt-label">AI Instruction:</div>
+                                        <div class="prompt-text">"Notify me when someone approaches."</div>
+                                    </div>
+                                </div>
+                                <div class="cam-feed-item" data-cam-id="garage">
+                                    <div class="cam-feed-preview">
+                                        <div class="cam-badge">Garage</div>
+                                        <div class="cam-status"><span class="pulse-dot green"></span> ONLINE</div>
+                                        <div class="scan-laser"></div>
+                                        <div class="mock-feed-image feed-garage"></div>
+                                    </div>
+                                    <div class="cam-prompt-info">
+                                        <div class="prompt-label">AI Instruction:</div>
+                                        <div class="prompt-text">"Notify me if the garage stays open."</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Alert Stream Column -->
+                            <div class="alerts-column">
+                                <div class="alert-section-title">REAL-TIME EVENTS</div>
+                                <div class="alert-stream-list" id="hero-alert-stream">
+                                    <!-- Dynamic notifications inject here -->
+                                    <div class="alert-item animate-in">
+                                        <div class="alert-header">
+                                            <span class="alert-camera-name">Front Door</span>
+                                            <span class="alert-time">Just now</span>
+                                        </div>
+                                        <div class="alert-body">
+                                            <i data-lucide="package" class="alert-type-icon text-blue"></i>
+                                            <span class="alert-desc">Package Delivered</span>
+                                        </div>
+                                        <div class="alert-confidence">
+                                            <div class="conf-bar" style="width: 98%"></div>
+                                            <span>98% Confidence</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive AI Prompt Section (Signature Differentiator) -->
+        <section class="prompt-simulator-section" id="solutions">
+            <div class="section-container">
+                <div class="section-header reveal-item">
+                    <h2 class="section-title">Define Exactly What Every Camera Monitors</h2>
+                    <p class="section-subtitle">
+                        Every camera has its own independent AI brain. Describe any observable event in natural language—if you can write it, OSHA AI can track it.
+                    </p>
+                </div>
+
+                <div class="simulator-grid">
+                    <!-- Left: Camera selector -->
+                    <div class="simulator-selectors reveal-item">
+                        <div class="selector-card glass-panel">
+                            <h3 class="panel-header-title">Connected Cameras</h3>
+                            <div class="camera-selectors-list">
+                                <button class="selector-btn active" data-target="front-door">
+                                    <div class="selector-icon-box">
+                                        <i data-lucide="door-closed"></i>
+                                    </div>
+                                    <div class="selector-info">
+                                        <span class="selector-name">Front Door</span>
+                                        <span class="selector-desc">Home entrance & driveway</span>
+                                    </div>
+                                </button>
+                                <button class="selector-btn" data-target="warehouse">
+                                    <div class="selector-icon-box">
+                                        <i data-lucide="warehouse"></i>
+                                    </div>
+                                    <div class="selector-info">
+                                        <span class="selector-name">Warehouse Loading Dock</span>
+                                        <span class="selector-desc">Industrial monitoring & safety</span>
+                                    </div>
+                                </button>
+                                <button class="selector-btn" data-target="living-room">
+                                    <div class="selector-icon-box">
+                                        <i data-lucide="sofa"></i>
+                                    </div>
+                                    <div class="selector-info">
+                                        <span class="selector-name">Living Room</span>
+                                        <span class="selector-desc">Indoor/Pet monitoring</span>
+                                    </div>
+                                </button>
+                                <button class="selector-btn" data-target="garage">
+                                    <div class="selector-icon-box">
+                                        <i data-lucide="car"></i>
+                                    </div>
+                                    <div class="selector-info">
+                                        <span class="selector-name">Garage Gate</span>
+                                        <span class="selector-desc">Vehicle entrance control</span>
+                                    </div>
+                                </button>
+                                <button class="selector-btn" data-target="nursery">
+                                    <div class="selector-icon-box">
+                                        <i data-lucide="baby"></i>
+                                    </div>
+                                    <div class="selector-info">
+                                        <span class="selector-name">Nursery Room</span>
+                                        <span class="selector-desc">Baby crib monitoring</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Prompt Editor & Thinking Animation -->
+                    <div class="simulator-display reveal-item">
+                        <div class="display-card glass-panel">
+                            <!-- Terminal / Prompt Editor header -->
+                            <div class="prompt-editor-header">
+                                <div class="editor-tab">
+                                    <i data-lucide="terminal" class="tab-icon"></i>
+                                    <span>AI Camera Brain Configuration</span>
+                                </div>
+                                <div class="status-indicator">
+                                    <span class="pulse-dot green"></span> Ready
+                                </div>
+                            </div>
+
+                            <!-- Interactive prompt block -->
+                            <div class="prompt-input-area">
+                                <div class="prompt-prefix">WHEN DETECTION TRIGGERS:</div>
+                                <div class="typewriter-container">
+                                    <span id="simulator-prompt-text" class="prompt-text-dynamic">Notify me when someone approaches the door.</span><span class="typed-cursor">|</span>
+                                </div>
+                                <div class="prompt-label-badge">Example Prompt</div>
+                            </div>
+
+                            <div class="prompt-footer-note">
+                                <i data-lucide="info" class="info-icon"></i>
+                                <span>Every camera accepts completely custom instructions. Users are never limited to predefined events.</span>
+                            </div>
+
+                            <!-- Animated Flowchart / Thinking Visualization -->
+                            <div class="flowchart-wrapper">
+                                <div class="flowchart-title">AI PIPELINE DECISION FLOW</div>
+                                
+                                <div class="flowchart-nodes-container">
+                                    <!-- Node 1 -->
+                                    <div class="flow-node active" id="node-prompt">
+                                        <div class="node-circle"><i data-lucide="code"></i></div>
+                                        <div class="node-label">Prompt</div>
+                                    </div>
+                                    
+                                    <div class="flow-line-connector"><div class="flow-line-pulse"></div></div>
+
+                                    <!-- Node 2 -->
+                                    <div class="flow-node" id="node-brain">
+                                        <div class="node-circle"><i data-lucide="brain"></i></div>
+                                        <div class="node-label">AI Brain</div>
+                                    </div>
+
+                                    <div class="flow-line-connector"><div class="flow-line-pulse"></div></div>
+
+                                    <!-- Node 3 -->
+                                    <div class="flow-node" id="node-analysis">
+                                        <div class="node-circle"><i data-lucide="scan-eye"></i></div>
+                                        <div class="node-label">Analysis</div>
+                                    </div>
+
+                                    <div class="flow-line-connector"><div class="flow-line-pulse"></div></div>
+
+                                    <!-- Node 4 -->
+                                    <div class="flow-node" id="node-decision">
+                                        <div class="node-circle"><i data-lucide="check-circle-2"></i></div>
+                                        <div class="node-label">Decision</div>
+                                    </div>
+
+                                    <div class="flow-line-connector"><div class="flow-line-pulse"></div></div>
+
+                                    <!-- Node 5 -->
+                                    <div class="flow-node" id="node-notification">
+                                        <div class="node-circle"><i data-lucide="bell"></i></div>
+                                        <div class="node-label">Alert</div>
+                                    </div>
+                                </div>
+
+                                <!-- Dynamic detail box demonstrating the active node processing detail -->
+                                <div class="flow-process-detail glass-panel-dark" id="flow-detail-box">
+                                    <div class="detail-grid">
+                                        <div class="detail-visual">
+                                            <!-- Video snapshot / scanner layout -->
+                                            <div class="detail-snapshot">
+                                                <div class="detail-laser"></div>
+                                                <div class="detail-snapshot-img" id="flow-snap-img"></div>
+                                                <div class="detail-bounding-box" id="flow-bound-box"></div>
+                                            </div>
+                                        </div>
+                                        <div class="detail-explanation">
+                                            <div class="detail-row">
+                                                <span class="detail-lbl">Active Action:</span>
+                                                <span class="detail-val" id="flow-action">Parsing custom logic...</span>
+                                            </div>
+                                            <div class="detail-row">
+                                                <span class="detail-lbl">Reasoning:</span>
+                                                <span class="detail-val italic" id="flow-reasoning">"Waiting for command input..."</span>
+                                            </div>
+                                            <div class="detail-row">
+                                                <span class="detail-lbl">Confidence:</span>
+                                                <span class="detail-val font-mono font-bold text-emerald" id="flow-confidence">0.0%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works (Horizontal Timeline) -->
+        <section class="how-it-works-section" id="how-it-works">
+            <div class="section-container">
+                <div class="section-header reveal-item">
+                    <h2 class="section-title">Deploy in Four Simple Steps</h2>
+                    <p class="section-subtitle">OSHA AI hooks directly into your existing setup. No expensive installers or proprietary camera hardware required.</p>
+                </div>
+
+                <div class="timeline-container reveal-item">
+                    <div class="timeline-progress-track">
+                        <div class="timeline-progress-bar" id="timeline-progress"></div>
+                    </div>
+
+                    <div class="timeline-grid">
+                        <!-- Step 1 -->
+                        <div class="timeline-step" data-step="1">
+                            <div class="step-num">01</div>
+                            <div class="step-icon-wrapper">
+                                <i data-lucide="video" class="step-icon-main"></i>
+                            </div>
+                            <h3 class="step-title">Connect Cameras</h3>
+                            <p class="step-desc">Provide RTSP link or sign in with your Ring, Nest, Wyze, or local camera feeds in seconds.</p>
+                        </div>
+                        
+                        <!-- Step 2 -->
+                        <div class="timeline-step" data-step="2">
+                            <div class="step-num">02</div>
+                            <div class="step-icon-wrapper">
+                                <i data-lucide="pencil-line" class="step-icon-main"></i>
+                            </div>
+                            <h3 class="step-title">Write Prompt</h3>
+                            <p class="step-desc">Simply describe what you want the AI brain on each camera to watch out for in plain text.</p>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="timeline-step" data-step="3">
+                            <div class="step-num">03</div>
+                            <div class="step-icon-wrapper">
+                                <i data-lucide="scan" class="step-icon-main"></i>
+                            </div>
+                            <h3 class="step-title">Continuous Analysis</h3>
+                            <p class="step-desc">OSHA AI scans frame vectors locally or via secure cloud clusters in fractions of a second.</p>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="timeline-step" data-step="4">
+                            <div class="step-num">04</div>
+                            <div class="step-icon-wrapper">
+                                <i data-lucide="message-square-dashed" class="step-icon-main"></i>
+                            </div>
+                            <h3 class="step-title">Intelligent Alert</h3>
+                            <p class="step-desc">Receive instant rich notifications or webhooks only when your specific criteria are met.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Monitor Anything You Can Describe (Prompt Showroom Gallery) -->
+        <section class="showroom-section" id="showroom">
+            <div class="section-container">
+                <div class="section-header reveal-item">
+                    <h2 class="section-title">Monitor Anything You Can Describe</h2>
+                    <p class="section-subtitle">Stop using basic movement grids. Define triggers for home protection, business logistics, family care, and commercial operations.</p>
+                </div>
+
+                <div class="showroom-grid">
+                    <!-- Prompt Card 1 -->
+                    <div class="showroom-card glass-panel reveal-item">
+                        <div class="showroom-image-box showroom-pkg">
+                            <div class="card-prompt-badge">Home Security</div>
+                        </div>
+                        <div class="showroom-info">
+                            <div class="card-prompt-text">"Notify me when a package arrives."</div>
+                            <p class="card-prompt-details">Ignores birds, leaves, shadows, or vehicles driving past. Focuses exclusively on package dropped-off events.</p>
+                        </div>
+                    </div>
+
+                    <!-- Prompt Card 2 -->
+                    <div class="showroom-card glass-panel reveal-item">
+                        <div class="showroom-image-box showroom-midnight">
+                            <div class="card-prompt-badge">After Hours</div>
+                        </div>
+                        <div class="showroom-info">
+                            <div class="card-prompt-text">"Notify me if someone enters after midnight."</div>
+                            <p class="card-prompt-details">Runs on a custom schedule. Automatically alerts emergency contacts if unauthorized activity occurs.</p>
+                        </div>
+                    </div>
+
+                    <!-- Prompt Card 3 -->
+                    <div class="showroom-card glass-panel reveal-item">
+                        <div class="showroom-image-box showroom-pet">
+                            <div class="card-prompt-badge">Pet Care</div>
+                        </div>
+                        <div class="showroom-info">
+                            <div class="card-prompt-text">"Alert me when my dog jumps onto the couch."</div>
+                            <p class="card-prompt-details">Track household pets and train behavior remotely, triggering automatic sound cues to correct habits.</p>
+                        </div>
+                    </div>
+
+                    <!-- Prompt Card 4 -->
+                    <div class="showroom-card glass-panel reveal-item">
+                        <div class="showroom-image-box showroom-logistics">
+                            <div class="card-prompt-badge">Industrial Logistics</div>
+                        </div>
+                        <div class="showroom-info">
+                            <div class="card-prompt-text">"Notify if the warehouse loading dock is blocked."</div>
+                            <p class="card-prompt-details">Tracks delivery truck obstructions and delays. Ideal for warehouse throughput safety checks.</p>
+                        </div>
+                    </div>
+
+                    <!-- Prompt Card 5 -->
+                    <div class="showroom-card glass-panel reveal-item">
+                        <div class="showroom-image-box showroom-garage">
+                            <div class="card-prompt-badge">Automation</div>
+                        </div>
+                        <div class="showroom-info">
+                            <div class="card-prompt-text">"Tell me when the garage stays open for 5 minutes."</div>
+                            <p class="card-prompt-details">Integrates with Home Assistant to trigger automated garage door closers when left unattended.</p>
+                        </div>
+                    </div>
+
+                    <!-- Prompt Card 6 -->
+                    <div class="showroom-card glass-panel reveal-item">
+                        <div class="showroom-image-box showroom-safety">
+                            <div class="card-prompt-badge">Industrial Safety</div>
+                        </div>
+                        <div class="showroom-info">
+                            <div class="card-prompt-text">"Alert if worker is in red zone without hard hat."</div>
+                            <p class="card-prompt-details">Enforces safety compliances instantly on commercial sites using existing standard network cameras.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="showroom-footer reveal-item">
+                    <p class="footer-note-text">
+                        <strong>Please Note:</strong> These are only examples. OSHA AI is not limited to these templates. If the event is visible, you can track it.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Grid Section -->
+        <section class="features-section" id="features">
+            <div class="section-container">
+                <div class="section-header reveal-item">
+                    <h2 class="section-title">Engineered For Zero Latency, Total Control</h2>
+                    <p class="section-subtitle">We combined low-latency stream ingestion with advanced visual language modeling (VLM) for real-time performance.</p>
+                </div>
+
+                <div class="features-grid">
+                    <!-- Feature 1 -->
+                    <div class="feature-card glass-panel reveal-item">
+                        <div class="feature-icon-wrapper text-blue">
+                            <i data-lucide="brain-circuit"></i>
+                        </div>
+                        <h3 class="feature-card-title">Custom AI Instructions</h3>
+                        <p class="feature-card-desc">Assign independent, prompt-based AI rules for every camera stream. Alter rules instantly via console or API.</p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="feature-card glass-panel reveal-item">
+                        <div class="feature-icon-wrapper text-emerald">
+                            <i data-lucide="infinity"></i>
+                        </div>
+                        <h3 class="feature-card-title">Unlimited Monitoring</h3>
+                        <p class="feature-card-desc">Continuous 24/7 scanning. Deep learning models evaluate frames instantly without periodic timeouts.</p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="feature-card glass-panel reveal-item">
+                        <div class="feature-icon-wrapper text-blue">
+                            <i data-lucide="cpu"></i>
+                        </div>
+                        <h3 class="feature-card-title">Existing Hardware</h3>
+                        <p class="feature-card-desc">No special chips. Works with standard IP, CCTV, RTSP streams, Ring, Nest, Arlo, and Wyze feeds.</p>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="feature-card glass-panel reveal-item">
+                        <div class="feature-icon-wrapper text-emerald">
+                            <i data-lucide="zap"></i>
+                        </div>
+                        <h3 class="feature-card-title">Instant Notifications</h3>
+                        <p class="feature-card-desc">Instant alerts pushed to your phone, email, slack channel, or custom HTTP webhooks with full context snapshots.</p>
+                    </div>
+
+                    <!-- Feature 5 -->
+                    <div class="feature-card glass-panel reveal-item">
+                        <div class="feature-icon-wrapper text-blue">
+                            <i data-lucide="eye-off"></i>
+                        </div>
+                        <h3 class="feature-card-title">Privacy First Architecture</h3>
+                        <p class="feature-card-desc">Continuous feeds are stored only in memory for inference. We never save raw footage without explicit approval.</p>
+                    </div>
+
+                    <!-- Feature 6 -->
+                    <div class="feature-card glass-panel reveal-item">
+                        <div class="feature-icon-wrapper text-emerald">
+                            <i data-lucide="lock"></i>
+                        </div>
+                        <h3 class="feature-card-title">Encrypted Processing</h3>
+                        <p class="feature-card-desc">Military-grade AES-256 state encryption. End-to-end TLS tunnels protect every video frame in transit.</p>
+                    </div>
+
+                    <!-- Feature 7 -->
+                    <div class="feature-card glass-panel reveal-item">
+                        <div class="feature-icon-wrapper text-blue">
+                            <i data-lucide="layout-grid"></i>
+                        </div>
+                        <h3 class="feature-card-title">Multi-Location Support</h3>
+                        <p class="feature-card-desc">Aggregated console allows managing office feeds, warehouse safety lines, and home gates under a single portal.</p>
+                    </div>
+
+                    <!-- Feature 8 -->
+                    <div class="feature-card glass-panel reveal-item">
+                        <div class="feature-icon-wrapper text-emerald">
+                            <i data-lucide="sliders"></i>
+                        </div>
+                        <h3 class="feature-card-title">Simple Dashboard</h3>
+                        <p class="feature-card-desc">View historical events, track device uptime, change prompts, adjust scheduled alerts and tweak thresholds effortlessly.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Showcase (Massive Interactive Panel) -->
+        <section class="dashboard-showcase-section" id="dashboard-showcase">
+            <div class="section-container">
+                <div class="section-header reveal-item">
+                    <h2 class="section-title">The Command Center for Vision AI</h2>
+                    <p class="section-subtitle">View active alerts, manage custom camera scripts, configure automation hooks, and visualize visual logic pipelines.</p>
+                </div>
+
+                <div class="showcase-frame glass-panel reveal-item">
+                    <!-- Admin UI mock layout -->
+                    <div class="app-sidebar">
+                        <div class="sidebar-logo">
+                            <span class="logo-circle"></span>
+                            <span>OSHA AI Console</span>
+                        </div>
+                        <nav class="sidebar-nav">
+                            <span class="sidebar-link active"><i data-lucide="layout-dashboard"></i> Dashboard</span>
+                            <span class="sidebar-link"><i data-lucide="video"></i> Camera Streams</span>
+                            <span class="sidebar-link"><i data-lucide="history"></i> Event Logs</span>
+                            <span class="sidebar-link"><i data-lucide="bar-chart-3"></i> Analytics</span>
+                            <span class="sidebar-link"><i data-lucide="settings"></i> Configurations</span>
+                        </nav>
+                    </div>
+
+                    <div class="app-content">
+                        <!-- Upper stats row -->
+                        <div class="app-topbar">
+                            <div class="app-page-title">Operational Overview</div>
+                            <div class="app-search">
+                                <i data-lucide="search" class="search-icon"></i>
+                                <input type="text" placeholder="Search streams or logs..." class="search-input" readonly>
+                            </div>
+                        </div>
+
+                        <div class="app-main-grid">
+                            <!-- Large chart widget -->
+                            <div class="widget-card glass-panel-dark grid-col-span-2">
+                                <div class="widget-header">
+                                    <div class="widget-title">Visual Alert Detections (Last 24 Hours)</div>
+                                    <span class="widget-metric">+12.4% vs Yesterday</span>
+                                </div>
+                                <div class="widget-chart-wrapper">
+                                    <!-- Interactive SVG Chart -->
+                                    <svg class="interactive-chart-svg" viewBox="0 0 500 150">
+                                        <defs>
+                                            <linearGradient id="chart-grad" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stop-color="#2555eb" stop-opacity="0.3"/>
+                                                <stop offset="100%" stop-color="#2555eb" stop-opacity="0"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <!-- Chart gridlines -->
+                                        <line x1="0" y1="30" x2="500" y2="30" stroke="rgba(255,255,255,0.05)" />
+                                        <line x1="0" y1="75" x2="500" y2="75" stroke="rgba(255,255,255,0.05)" />
+                                        <line x1="0" y1="120" x2="500" y2="120" stroke="rgba(255,255,255,0.05)" />
+                                        <!-- Chart Path (Area and Line) -->
+                                        <path d="M 0 130 Q 80 80 150 110 T 300 40 T 450 70 L 500 60 L 500 150 L 0 150 Z" fill="url(#chart-grad)"></path>
+                                        <path d="M 0 130 Q 80 80 150 110 T 300 40 T 450 70 L 500 60" fill="none" stroke="#2555eb" stroke-width="3" class="chart-stroke-animation"></path>
+                                        <!-- Dots along the line -->
+                                        <circle cx="150" cy="110" r="4" fill="#ffffff" stroke="#2555eb" stroke-width="2"></circle>
+                                        <circle cx="300" cy="40" r="4" fill="#ffffff" stroke="#2555eb" stroke-width="2"></circle>
+                                        <circle cx="450" cy="70" r="4" fill="#ffffff" stroke="#2555eb" stroke-width="2"></circle>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Small active widget -->
+                            <div class="widget-card glass-panel-dark">
+                                <div class="widget-header">
+                                    <div class="widget-title">Active Security Policies</div>
+                                </div>
+                                <div class="widget-policies-list">
+                                    <div class="policy-item">
+                                        <span class="policy-status active"></span>
+                                        <div class="policy-info">
+                                            <div class="policy-name">Zone 3 Gate Watch</div>
+                                            <div class="policy-rule">Trigger: Delivery Truck Blocked</div>
+                                        </div>
+                                    </div>
+                                    <div class="policy-item">
+                                        <span class="policy-status active"></span>
+                                        <div class="policy-info">
+                                            <div class="policy-name">Lobby Ingress Control</div>
+                                            <div class="policy-rule">Trigger: Off-hours Entry</div>
+                                        </div>
+                                    </div>
+                                    <div class="policy-item">
+                                        <span class="policy-status active"></span>
+                                        <div class="policy-info">
+                                            <div class="policy-name">Crib Breath Check</div>
+                                            <div class="policy-rule">Trigger: Baby Stands</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security & Trust Section -->
+        <section class="security-section" id="security">
+            <div class="section-container">
+                <div class="security-grid">
+                    <div class="security-info reveal-item">
+                        <div class="security-tag-badge">
+                            <i data-lucide="shield" class="badge-icon"></i>
+                            <span>Enterprise Privacy Certification</span>
+                        </div>
+                        <h2 class="section-title text-left">Your Streams. Fully Under Your Control.</h2>
+                        <p class="section-subtitle text-left">
+                            We believe enterprise security requires ironclad data practices. OSHA AI treats privacy as a core engineering parameter.
+                        </p>
+                        
+                        <div class="security-check-grid">
+                            <div class="check-item">
+                                <div class="check-icon-box"><i data-lucide="check"></i></div>
+                                <div>
+                                    <h4 class="check-title">End-to-End Stream Encryption</h4>
+                                    <p class="check-desc">We encrypt camera feeds using TLS 1.3 and local network keys before processing.</p>
+                                </div>
+                            </div>
+                            <div class="check-item">
+                                <div class="check-icon-box"><i data-lucide="check"></i></div>
+                                <div>
+                                    <h4 class="check-title">Zero Continuous Storage</h4>
+                                    <p class="check-desc">We don't record video archives. Non-event video frames are immediately cleared from local memory buffer.</p>
+                                </div>
+                            </div>
+                            <div class="check-item">
+                                <div class="check-icon-box"><i data-lucide="check"></i></div>
+                                <div>
+                                    <h4 class="check-title">Local Inference Gateways</h4>
+                                    <p class="check-desc">Deploy local edge processing containers. Run model operations completely inside your corporate intranet.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shield Interactive Visual -->
+                    <div class="security-visual-wrapper reveal-item">
+                        <div class="security-lens-box glass-panel">
+                            <div class="shield-radial-glow"></div>
+                            <div class="shield-lines">
+                                <svg class="security-shield-svg" viewBox="0 0 100 100" fill="none">
+                                    <!-- Inner circles and shield grid -->
+                                    <circle cx="50" cy="50" r="42" stroke="rgba(255,255,255,0.03)" stroke-width="1.5" />
+                                    <circle cx="50" cy="50" r="30" stroke="rgba(37,99,235,0.15)" stroke-dasharray="4 6" stroke-width="1" class="spin-clockwise" />
+                                    <path d="M50 20 L50 80 M20 50 L80 50" stroke="rgba(255,255,255,0.03)" stroke-width="1" />
+                                    <!-- Actual Shield outline -->
+                                    <path d="M50 28 C56 28 65 25 65 25 C65 25 67 48 50 68 C33 48 35 25 35 25 C35 25 44 28 50 28 Z" 
+                                          fill="url(#shield-gradient)" 
+                                          stroke="#2555eb" 
+                                          stroke-width="2.5" 
+                                          stroke-linejoin="round"
+                                          class="pulsing-shield" />
+                                    <defs>
+                                        <linearGradient id="shield-gradient" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stop-color="#2555eb" stop-opacity="0.2"/>
+                                            <stop offset="100%" stop-color="#2555eb" stop-opacity="0.0"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div class="shield-metrics">
+                                <div class="metric-item">
+                                    <div class="metric-val" id="crypt-bits">256</div>
+                                    <div class="metric-lbl">AES Encryption</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-val" id="latency-ms">28ms</div>
+                                    <div class="metric-lbl">Inference Latency</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- FAQ Section -->
+        <section class="faq-section" id="faq">
+            <div class="section-container faq-wrapper">
+                <div class="section-header reveal-item">
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                    <p class="section-subtitle">Have questions about setting up your feeds or writing prompts? Find answers below.</p>
+                </div>
+
+                <div class="faq-accordion-list">
+                    <!-- Item 1 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">What is OSHA AI?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                OSHA AI transforms your existing security cameras into intelligent assistants. Instead of only detecting motion, every camera can follow custom natural-language instructions, allowing it to monitor virtually any observable event that you describe.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">How is OSHA AI different from traditional security cameras?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                Most security cameras only detect motion or a limited set of predefined events. OSHA AI allows every camera to understand completely custom monitoring instructions written in plain English, giving each camera its own independent AI behavior.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">Do I need to buy new cameras?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                No. OSHA AI is designed to work with many existing IP cameras that support standard streaming protocols such as RTSP and ONVIF. In most cases, no new hardware is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">Can every camera have different instructions?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p>Yes. Every connected camera can have its own completely independent monitoring prompt.</p>
+                                <p>For example:</p>
+                                <ul>
+                                    <li>Front Door: Notify me when a package arrives.</li>
+                                    <li>Garage: Alert me if the garage door remains open.</li>
+                                    <li>Living Room: Notify me when the dog jumps on the couch.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 5 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">What kinds of things can OSHA AI monitor?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p>OSHA AI is not limited to predefined events.</p>
+                                <p>You can describe almost any observable event in natural language, such as:</p>
+                                <ul>
+                                    <li>Deliveries</li>
+                                    <li>Visitors</li>
+                                    <li>Vehicles</li>
+                                    <li>Pets</li>
+                                    <li>Doors</li>
+                                    <li>Loading docks</li>
+                                    <li>Parking areas</li>
+                                    <li>Restricted zones</li>
+                                    <li>Equipment</li>
+                                    <li>Warehouses</li>
+                                </ul>
+                                <p>These are only examples. If you can describe it, OSHA AI is designed to monitor it.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 6 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">Does OSHA AI record continuous video?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p>No.</p>
+                                <p>OSHA AI analyzes camera frames to detect events but is designed to avoid continuously storing footage. Non-event frames are discarded, helping protect user privacy.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 7 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">What happens when an event is detected?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p>When OSHA AI confirms that your monitoring instructions have been satisfied, it creates an alert containing:</p>
+                                <ul>
+                                    <li>Camera name</li>
+                                    <li>Timestamp</li>
+                                    <li>Event snapshot</li>
+                                    <li>AI explanation (where applicable)</li>
+                                </ul>
+                                <p>The alert appears immediately in your dashboard.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 8 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">Can I monitor multiple cameras?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p>Yes.</p>
+                                <p>Depending on your subscription plan, you can connect multiple cameras, each with its own independent AI instructions.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 9 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">How quickly are alerts delivered?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                OSHA AI is optimized to deliver alerts as quickly as possible after detecting a qualifying event. Actual timing depends on network conditions, camera quality, and the complexity of the requested monitoring task.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 10 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">Does OSHA AI work at night?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p>Yes.</p>
+                                <p>Performance depends on camera quality and available lighting. Cameras with good low-light or infrared capabilities generally provide better results.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 11 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">Is my camera footage secure?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                Security and privacy are built into the platform. Camera credentials, API keys, and backend services remain protected, and only authenticated users can access their own cameras and alerts.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 12 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">Does OSHA AI support outdoor cameras?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p>Yes.</p>
+                                <p>Outdoor cameras can be used for monitoring entrances, driveways, parking lots, warehouses, loading docks, gates, and many other environments.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 13 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">Can OSHA AI distinguish between different events?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p>Yes.</p>
+                                <p>Instead of only detecting motion, OSHA AI evaluates whether the scene matches the monitoring instructions configured for that camera.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 14 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">Can I change my monitoring instructions at any time?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p>Absolutely.</p>
+                                <p>You can edit a camera's instructions whenever you like, and OSHA AI will begin using the updated monitoring rules.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 15 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">What notifications can I receive?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                Depending on your plan and configuration, OSHA AI can deliver real-time web notifications, with additional notification methods available as the platform evolves.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 16 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">Is there a free plan?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p>The Free plan lets you explore OSHA AI with 1 camera, web notifications, a 25-character prompt limit, and 20 live minutes of camera footage before upgrading to a paid plan.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 17 -->
+                    <div class="accordion-item glass-panel reveal-item">
+                        <button class="accordion-trigger" aria-expanded="false">
+                            <span class="faq-question">How do I get started?</span>
+                            <i data-lucide="chevron-down" class="accordion-chevron"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                Simply create an account, connect a supported camera, write your monitoring instructions in plain English, and let OSHA AI watch for the events that matter most to you.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Call to Action -->
+        <section class="final-cta-section" id="trial">
+            <div class="cta-radial-glow"></div>
+            <div class="section-container cta-box glass-panel reveal-item">
+                <h2 class="cta-title">Your Cameras Are Smarter Than Ever.</h2>
+                <p class="cta-subtitle">Begin monitoring in under 5 minutes. No credit card required to start your free trial (20 live minutes of camera footage). After you reach your limit, you will need to upgrade to a paid plan to continue using the service.</p>
+                <div class="cta-buttons">
+                    <a href="dashboard.html#google-login" class="btn btn-primary btn-lg btn-glow">Start Free Trial <i data-lucide="arrow-right" class="btn-icon"></i></a>
+                    <a href="#demo" class="btn btn-secondary btn-lg">Book Demo</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-root">
+        <div class="section-container footer-grid">
+            <!-- Brand Col -->
+            <div class="footer-brand-col">
+                <a href="#" class="footer-logo">
+                    <img src="logo.jpg" alt="Logo" class="logo-svg" style="width: 36px; height: 36px; border-radius: 6px; object-fit: cover;">
+                    <span class="logo-text">OSHA <span class="logo-accent">AI</span></span>
+                </a>
+                <p class="footer-description">
+                    The next generation of vision intelligence. Transform standard cameras into custom natural-language detectors.
+                </p>
+                <div class="footer-socials">
+                    <a href="#" aria-label="OSHA AI X Profile" class="social-link" style="font-weight: bold; font-family: sans-serif; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;">X</a>
+                    <a href="#" aria-label="OSHA AI GitHub Repository" class="social-link" style="font-weight: bold; font-family: monospace; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;">{'}'}</a>
+                    <a href="#" aria-label="OSHA AI LinkedIn Page" class="social-link" style="font-weight: bold; font-family: serif; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;">in</a>
+                </div>
+            </div>
+
+            <!-- Links Cols -->
+            <div class="footer-links-col">
+                <h4 class="footer-heading">Product</h4>
+                <a href="#features" class="footer-link-item">Features</a>
+                <a href="#solutions" class="footer-link-item">Solutions</a>
+                <a href="#pricing" class="footer-link-item">Pricing</a>
+                <a href="#security" class="footer-link-item">Security</a>
+                <a href="#demo" class="footer-link-item">Request Demo</a>
+            </div>
+
+            <div class="footer-links-col">
+                <h4 class="footer-heading">Resources</h4>
+                <a href="#docs" class="footer-link-item">API Docs</a>
+                <a href="#guides" class="footer-link-item">Camera Setup Guides</a>
+                <a href="#blog" class="footer-link-item">Engineering Blog</a>
+                <a href="#case" class="footer-link-item">Case Studies</a>
+            </div>
+
+            <div class="footer-links-col">
+                <h4 class="footer-heading">Legal</h4>
+                <a href="#privacy" class="footer-link-item">Privacy Policy</a>
+                <a href="#terms" class="footer-link-item">Terms of Service</a>
+                <a href="#dpa" class="footer-link-item">Data Processing Addendum</a>
+                <a href="#trust" class="footer-link-item">Trust Center</a>
+            </div>
+
+            <!-- Newsletter Col -->
+            <div class="footer-newsletter-col">
+                <h4 class="footer-heading">Stay Updated</h4>
+                <p class="newsletter-sub">Get technical product updates and visual AI updates directly to your inbox.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed!');">
+                    <input type="email" placeholder="you@company.com" required class="newsletter-input" aria-label="Email for Newsletter">
+                    <button type="submit" class="btn btn-primary btn-newsletter" aria-label="Subscribe to newsletter">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="section-container footer-bottom">
+            <span>&copy; 2026 OSHA AI Inc. All rights reserved.</span>
+            <div class="footer-bottom-links">
+                <a href="#privacy">Privacy</a>
+                <a href="#terms">Terms</a>
+                <a href="#cookies">Cookies</a>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="contact-sales-modal" style="display: none; align-items: center; justify-content: center; z-index: 1000; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);">
+        <div class="modal-content glass-panel" style="max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto; padding: 32px; border-top: 4px solid #f59e0b; position: relative;">
+            <button class="modal-close" onclick="document.getElementById('contact-sales-modal').style.display='none'" style="position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--text-secondary); cursor: pointer;"><i data-lucide="x"></i></button>
+            <h2 style="margin-top: 0; margin-bottom: 8px;">Contact Sales</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 24px;">Please fill out the form below and our enterprise team will reach out to you.</p>
+            
+            <form id="contactSalesForm" onsubmit="handleContactSubmit(event)" style="display: flex; flex-direction: column; gap: 16px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div>
+                        <label style="font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 6px;">Full Name *</label>
+                        <input type="text" id="cs-fullname" required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-light); background: var(--bg-primary); color: var(--text-primary);">
+                    </div>
+                    <div>
+                        <label style="font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 6px;">Company Name *</label>
+                        <input type="text" id="cs-company" required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-light); background: var(--bg-primary); color: var(--text-primary);">
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div>
+                        <label style="font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 6px;">Business Email *</label>
+                        <input type="email" id="cs-email" required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-light); background: var(--bg-primary); color: var(--text-primary);">
+                    </div>
+                    <div>
+                        <label style="font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 6px;">Phone Number</label>
+                        <input type="tel" id="cs-phone" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-light); background: var(--bg-primary); color: var(--text-primary);">
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div>
+                        <label style="font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 6px;">Country *</label>
+                        <input type="text" id="cs-country" required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-light); background: var(--bg-primary); color: var(--text-primary);">
+                    </div>
+                    <div>
+                        <label style="font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 6px;">Est. Cameras</label>
+                        <input type="number" id="cs-cameras" required min="1" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-light); background: var(--bg-primary); color: var(--text-primary);">
+                    </div>
+                </div>
+                <div>
+                    <label style="font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 6px;">Industry *</label>
+                    <input type="text" id="cs-industry" required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-light); background: var(--bg-primary); color: var(--text-primary);">
+                </div>
+                <div>
+                    <label style="font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 6px;">Message</label>
+                    <textarea id="cs-message" rows="3" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-light); background: var(--bg-primary); color: var(--text-primary); resize: vertical;">I'm interested in deploying OSHA AI for my organization.</textarea>
+                </div>
+                
+                <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); padding: 12px; border-radius: 6px; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;">
+                    <p style="margin-top:0;">Every organization has unique security requirements.</p>
+                    <p>We'll design a custom deployment based on your camera infrastructure, monitoring goals, and scalability requirements.</p>
+                    <p style="margin-bottom:0;">Our team will respond with a tailored proposal, implementation plan, and pricing.</p>
+                </div>
+
+                <button type="submit" id="cs-submit-btn" class="btn btn-primary" style="background: linear-gradient(135deg, #f59e0b, #d97706); border-color: #d97706; margin-top: 8px;">Submit Request</button>
+            </form>
+            
+            <script>
+                async function handleContactSubmit(e) {
+                    e.preventDefault();
+                    const btn = document.getElementById('cs-submit-btn');
+                    btn.disabled = true;
+                    btn.textContent = 'Sending...';
+                    
+                    const payload = {
+                        fullName: document.getElementById('cs-fullname').value,
+                        companyName: document.getElementById('cs-company').value,
+                        businessEmail: document.getElementById('cs-email').value,
+                        phone: document.getElementById('cs-phone').value,
+                        country: document.getElementById('cs-country').value,
+                        cameras: document.getElementById('cs-cameras').value,
+                        industry: document.getElementById('cs-industry').value,
+                        message: document.getElementById('cs-message').value
+                    };
+                    
+                    try {
+                        const response = await fetch(window.API_BASE_URL + '/api/contact-sales', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        
+                        const result = await response.json();
+
+                        if (response.ok) {
+                            // Show success UI inside the modal
+                            const form = document.getElementById('contactSalesForm');
+                            form.innerHTML = `
+                                <div style="text-align:center; padding: 32px 0;">
+                                    <div style="font-size: 3rem; margin-bottom: 16px;">✅</div>
+                                    <h3 style="margin: 0 0 12px; color: var(--text-primary);">Request Received!</h3>
+                                    <p style="color: var(--text-secondary); margin: 0 0 8px;">Thank you, <strong>${payload.fullName.split(' ')[0]}</strong>! Our enterprise team will reach out to <strong>${payload.businessEmail}</strong> within 1–2 business days with a tailored proposal.</p>
+                                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0 0 16px;">A confirmation email has been sent to your inbox.</p>
+                                    <button onclick="document.getElementById('contact-sales-modal').style.display='none'" style="margin-top:20px; padding: 10px 24px; background: linear-gradient(135deg, #f59e0b, #d97706); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer;">Close</button>
+                                </div>
+                            `;
+                            if (result.previewUrl) {
+                                console.log('%c📬 Ethereal Email Preview (click to view sent email):', 'color: #f59e0b; font-weight: bold;', result.previewUrl);
+                            }
+                        } else {
+                            alert('Failed to send message: ' + (result.error || 'Please try again later.'));
+                            btn.disabled = false;
+                            btn.textContent = 'Submit Request';
+                        }
+                    } catch (error) {
+                        console.error('Error sending contact form:', error);
+                        alert('A network error occurred. Please check your connection and try again.');
+                        btn.disabled = false;
+                        btn.textContent = 'Submit Request';
+                    }
+                }
+            </script>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
