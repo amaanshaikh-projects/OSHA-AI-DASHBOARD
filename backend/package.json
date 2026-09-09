@@ -26,7 +26,7 @@
     "nodemailer": "^9.0.3",
     "onnxruntime-node": "^1.27.0",
     "resend": "^6.18.0",
-    "sharp": "^0.35.3",
+    "sharp": "^0.35.4",
     "stripe": "^22.3.0",
     "ws": "^8.21.1"
   },
