@@ -24,7 +24,7 @@
     "ioredis": "^5.11.1",
     "jsdom": "^29.1.1",
     "nodemailer": "^9.0.3",
-    "onnxruntime-node": "^1.27.0",
+    "onnxruntime-node": "^1.30.0",
     "resend": "^6.18.0",
     "sharp": "^0.35.3",
     "stripe": "^22.3.0",
